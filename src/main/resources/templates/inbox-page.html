@@ -24,7 +24,18 @@
     </nav>
 
     <main>
-        <p>Email list</p>
+        <div class="card">
+            <div class="card-header">Inbox</div>
+            <div class="card-body">
+                <a th:each="message : ${emailList}" class="list-group-item list-group-item-action active" href="#">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1" th:text="${message.subject}"/>
+                        <small th:text="${message.getVerboseTimeAgo()}"></small>
+                    </div>
+                    <p class="mb-1" th:text="${message.to}"/>
+                </a>
+            </div>
+        </div>
     </main>
 
     <footer>
