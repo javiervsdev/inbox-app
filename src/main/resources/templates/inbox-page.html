@@ -17,6 +17,9 @@
     </header>
 
     <nav>
+        <div class="card mb-1">
+            <a class="btn btn-primary" th:href="@{/compose}">Compose Message</a>
+        </div>
         <div th:replace="components/folder-list ::
             folder-list(panelName = 'Folders', folders = ${defaultFolders})"/>
         <div th:replace="/components/folder-list ::

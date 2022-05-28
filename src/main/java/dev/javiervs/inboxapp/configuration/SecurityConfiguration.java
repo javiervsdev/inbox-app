@@ -16,8 +16,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeRequests(request -> request
-                        .mvcMatchers("/", "/error").permitAll()
-                        .mvcMatchers().authenticated()
+                        .mvcMatchers("/", "/css/**", "/error").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .exceptionHandling(handler -> handler
                         .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
