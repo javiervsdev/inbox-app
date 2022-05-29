@@ -1,6 +1,8 @@
 package dev.javiervs.inboxapp.emaillist;
 
 import com.datastax.oss.driver.api.core.uuid.Uuids;
+import dev.javiervs.inboxapp.email.Email;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.ocpsoft.prettytime.PrettyTime;
@@ -15,6 +17,7 @@ import static org.springframework.data.cassandra.core.mapping.CassandraType.Name
 
 @Data
 @Builder
+@AllArgsConstructor
 @Table(value = "messages_by_user_folder")
 public class EmailListItem {
 
@@ -29,6 +32,15 @@ public class EmailListItem {
 
     @CassandraType(type = BOOLEAN)
     private boolean isUnread;
+
+    public static EmailListItem create(Email email, String owner, String folder) {
+        return EmailListItem.builder()
+                .key(EmailListItemKey.create(email, owner, folder))
+                .to(email.getTo())
+                .subject(email.getSubject())
+                .isUnread(true)
+                .build();
+    }
 
     public String getVerboseTimeAgo() {
         Date emailDateTime = new Date(Uuids.unixTimestamp(key.getTimeUUID()));

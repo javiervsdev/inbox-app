@@ -27,19 +27,19 @@
         <div class="card">
             <div class="card-header">Create New Email</div>
             <div class="card-body">
-                <form>
+                <form th:action="@{/sendEmail}" method="POST" th:object="${emailDto}">
                     <div class="mb-3">
                         <label for="toIds">To</label>
-                        <input type="text" class="form-control" id="toIds" th:value="${toIds}"/>
+                        <input type="text" class="form-control" name="toIds" id="toIds" th:field="*{to}"/>
                         <div id="toIdHelp" class="form-text">Enter comma separated GitHub Ids of your recipients</div>
                     </div>
                     <div class="mb-3">
                         <label for="subject">Subject</label>
-                        <input type="text" class="form-control" id="subject"/>
+                        <input type="text" class="form-control" th:field="*{subject}" id="subject"/>
                     </div>
                     <div class="mb-3">
                         <label for="body">Body</label>
-                        <textArea class="form-control" id="body" rows="5"></textArea>
+                        <textArea class="form-control" th:field="*{body}" id="body" rows="5"></textArea>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Send</button>

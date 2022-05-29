@@ -1,5 +1,6 @@
 package dev.javiervs.inboxapp.email;
 
+import com.datastax.oss.driver.api.core.uuid.Uuids;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -10,8 +11,10 @@ import org.springframework.data.cassandra.core.mapping.Table;
 import java.util.List;
 import java.util.UUID;
 
+import static dev.javiervs.inboxapp.email.EmailUtils.getUniqueIdsStream;
 import static org.springframework.data.cassandra.core.cql.PrimaryKeyType.PARTITIONED;
-import static org.springframework.data.cassandra.core.mapping.CassandraType.Name.*;
+import static org.springframework.data.cassandra.core.mapping.CassandraType.Name.LIST;
+import static org.springframework.data.cassandra.core.mapping.CassandraType.Name.TEXT;
 
 @Data
 @Builder
@@ -33,6 +36,20 @@ public class Email {
 
     @CassandraType(type = TEXT)
     private String body;
+
+    public static Email create(EmailDto emailDto) {
+        if (emailDto == null) {
+            throw new IllegalArgumentException("EmailDto cannot be null");
+        }
+
+        return Email.builder()
+                .id(Uuids.timeBased())
+                .from(emailDto.getFrom())
+                .to(getUniqueIdsStream(emailDto.getTo()).toList())
+                .subject(emailDto.getSubject())
+                .body(emailDto.getBody())
+                .build();
+    }
 
     public String getVerboseTo() {
         return String.join(", ", to);
