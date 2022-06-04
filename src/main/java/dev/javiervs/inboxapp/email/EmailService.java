@@ -6,7 +6,6 @@ import dev.javiervs.inboxapp.folder.UnreadEmailStatsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import static dev.javiervs.inboxapp.enums.DefaultFolder.INBOX;
@@ -20,8 +19,9 @@ public class EmailService {
     private final EmailListItemRepository emailListItemRepository;
     private final UnreadEmailStatsRepository unreadEmailStatsRepository;
 
-    public Optional<Email> findById(UUID id) {
-        return emailRepository.findById(id);
+    public Email findById(UUID id) {
+        return emailRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Email not found"));
     }
 
     public void sendEmail(EmailDto emailDto) {

@@ -1,7 +1,6 @@
 package dev.javiervs.inboxapp.controllers;
 
 import dev.javiervs.inboxapp.email.EmailService;
-import dev.javiervs.inboxapp.folder.FolderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,7 +17,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class EmailViewController {
 
-    private final FolderService folderService;
     private final EmailService emailService;
 
     @GetMapping("email/{id}")
@@ -26,15 +24,7 @@ public class EmailViewController {
                             @AuthenticationPrincipal OAuth2User principal,
                             Model model) {
         try {
-            String userId = principal.getAttribute("login");
-            model.addAttribute("defaultFolders",
-                    folderService.fetchDefaultFolders(userId));
-            model.addAttribute("userFolders",
-                    folderService.findAllById(userId));
-            model.addAttribute("email",
-                    emailService.findById(id)
-                            .orElseThrow(() ->
-                                    new IllegalArgumentException("Email not found")));
+            model.addAttribute("email", emailService.findById(id));
         } catch (IllegalArgumentException e) {
             log.error(e.getMessage());
             return "redirect:/";

@@ -2,7 +2,6 @@ package dev.javiervs.inboxapp.controllers;
 
 import dev.javiervs.inboxapp.email.EmailDto;
 import dev.javiervs.inboxapp.email.EmailService;
-import dev.javiervs.inboxapp.folder.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -20,18 +19,10 @@ import static java.util.stream.Collectors.joining;
 @RequiredArgsConstructor
 public class ComposeController {
 
-    private final FolderService folderService;
     private final EmailService emailService;
 
     @GetMapping("/compose")
-    public String getComposePage(@RequestParam(required = false) String to,
-                                 @AuthenticationPrincipal OAuth2User principal,
-                                 Model model) {
-        String userId = principal.getAttribute("login");
-        model.addAttribute("defaultFolders",
-                folderService.fetchDefaultFolders(userId));
-        model.addAttribute("userFolders",
-                folderService.findAllById(userId));
+    public String getComposePage(@RequestParam(required = false) String to, Model model) {
         model.addAttribute("emailDto",
                 EmailDto.builder()
                         .to(getUniqueIdsStream(to)
