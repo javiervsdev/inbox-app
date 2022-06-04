@@ -46,4 +46,8 @@ public class EmailListItem {
         Date emailDateTime = new Date(Uuids.unixTimestamp(key.getTimeUUID()));
         return new PrettyTime().format(emailDateTime);
     }
+
+    public String getFolderLabel() {
+        return key.getLabel();
+    }
 }

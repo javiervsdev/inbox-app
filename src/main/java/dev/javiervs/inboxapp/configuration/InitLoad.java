@@ -8,6 +8,7 @@ import dev.javiervs.inboxapp.emaillist.EmailListItemKey;
 import dev.javiervs.inboxapp.emaillist.EmailListItemRepository;
 import dev.javiervs.inboxapp.folder.Folder;
 import dev.javiervs.inboxapp.folder.FolderRepository;
+import dev.javiervs.inboxapp.folder.UnreadEmailStatsRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,8 @@ public class InitLoad {
     private final EmailListItemRepository emailListItemRepository;
     private final EmailRepository emailRepository;
 
+    private final UnreadEmailStatsRepository unreadEmailStatsRepository;
+
     public static final String DEFAULT_USER_ID = "javiervsdev";
 
     @PostConstruct
@@ -41,6 +44,8 @@ public class InitLoad {
                             EmailListItem emailListItem = createEmailListItem(i);
                             Email email = createEmail(emailListItem);
                             emailListItemRepository.save(emailListItem);
+                            unreadEmailStatsRepository.incrementUnreadCount(DEFAULT_USER_ID,
+                                    emailListItem.getFolderLabel());
                             emailRepository.save(email);
                         }
                 );
