@@ -12,8 +12,4 @@ public enum DefaultFolder {
 
     private final String name;
     private final String color;
-
-    public static DefaultFolder getRandomFolder() {
-        return values()[(int) (Math.random() * values().length)];
-    }
 }

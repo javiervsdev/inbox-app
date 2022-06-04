@@ -33,12 +33,12 @@ public class EmailListItem {
     @CassandraType(type = BOOLEAN)
     private boolean isUnread;
 
-    public static EmailListItem create(Email email, String owner, String folder) {
+    public static EmailListItem create(Email email, String owner, String folder, boolean isUnread) {
         return EmailListItem.builder()
                 .key(EmailListItemKey.create(email, owner, folder))
                 .to(email.getTo())
                 .subject(email.getSubject())
-                .isUnread(true)
+                .isUnread(isUnread)
                 .build();
     }
 

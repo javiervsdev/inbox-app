@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static dev.javiervs.inboxapp.enums.DefaultFolder.*;
+import static dev.javiervs.inboxapp.enums.DefaultFolder.IMPORTANT;
+
 @Service
 @RequiredArgsConstructor
 public class FolderService {
@@ -13,9 +16,9 @@ public class FolderService {
 
     public List<Folder> fetchDefaultFolders(String userId) {
         return List.of(
-                new Folder(userId, "Inbox", "blue"),
-                new Folder(userId, "Sent", "green"),
-                new Folder(userId, "Important", "yellow")
+                new Folder(userId, INBOX.getName(), INBOX.getColor()),
+                new Folder(userId, SENT.getName(), SENT.getColor()),
+                new Folder(userId, IMPORTANT.getName(), IMPORTANT.getColor())
         );
     }
 
