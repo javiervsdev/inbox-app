@@ -30,13 +30,18 @@
         <div class="card">
             <div class="card-header" th:text="${folderName}"/>
             <div class="card-body">
-                <a th:each="message : ${emailList}" class="list-group-item list-group-item-action active" th:href="@{/email/{id} (id = ${message.key.timeUUID})}">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1" th:text="${message.subject}"/>
-                        <small th:text="${message.getVerboseTimeAgo()}"></small>
-                    </div>
-                    <p class="mb-1" th:text="${message.to}"/>
-                </a>
+                <div class="list-group">
+                    <a th:each="message : ${emailList}"
+                       class="list-group-item list-group-item-action"
+                       th:href="@{/email/{id} (id = ${message.key.timeUUID}, folder = ${folderName})}"
+                       th:classappend="${message.isUnread} ? 'list-group-item-primary'">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1" th:text="${message.subject}"/>
+                            <small th:text="${message.getVerboseTimeAgo()}"></small>
+                        </div>
+                        <p class="mb-1" th:text="${message.to}"/>
+                    </a>
+                </div>
             </div>
         </div>
     </main>
