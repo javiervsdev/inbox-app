@@ -2,7 +2,6 @@ package dev.javiervs.inboxapp.controllers;
 
 import dev.javiervs.inboxapp.emaillist.EmailListItemService;
 import dev.javiervs.inboxapp.enums.DefaultFolder;
-import dev.javiervs.inboxapp.folder.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class InboxController {
 
-    private final FolderService folderService;
     private final EmailListItemService emailListItemService;
 
     @GetMapping("/")
@@ -29,9 +27,6 @@ public class InboxController {
         }
 
         String id = principal.getAttribute("login");
-        model.addAttribute("defaultFolders", folderService.fetchDefaultFolders(id));
-        model.addAttribute("userFolders", folderService.findAllById(id));
-
         String folderLabel = StringUtils.hasText(folder) ? folder: DefaultFolder.INBOX.getName(); //extract inbox to enum
         model.addAttribute("emailList", emailListItemService.findAllById(id, folderLabel));
         model.addAttribute("folderName", folderLabel);
