@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<th:block th:fragment="folders-nav">
+    <div th:replace="components/folder-list ::
+            folder-list(panelName = 'Folders', folders = ${defaultFolders})"/>
+    <div th:replace="/components/folder-list ::
+            folder-list(panelName = 'User Folders', folders = ${userFolders})"/>
+</th:block>
+</body>
+</html>

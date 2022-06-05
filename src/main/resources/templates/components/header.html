@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<header>
+    <header th:fragment="app-header">
+        <h3>
+            Inbox App -
+            <small > Welcome, </small>
+            <small class="text-muted" th:text="${#authentication.getPrincipal().getAttribute('name')}"/>
+        </h3>
+    </header>
+</header>
+</body>
+</html>

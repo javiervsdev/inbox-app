@@ -1,5 +1,6 @@
 .container {
     display: grid;
+    margin-top: 20px;
 
     grid-template-areas:
         "header header header"
@@ -19,7 +20,6 @@ header {
 
 nav {
     grid-area: nav;
-    margin-left: 0.5em;
 }
 
 main {

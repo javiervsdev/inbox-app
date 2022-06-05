@@ -12,15 +12,10 @@
 </head>
 <body>
 <div class="container">
-    <header>
-        <h1>Hello, Name</h1>
-    </header>
+    <header th:replace="components/header :: app-header"/>
 
     <nav>
-        <div th:replace="components/folder-list ::
-            folder-list(panelName = 'Folders', folders = ${defaultFolders})"/>
-        <div th:replace="/components/folder-list ::
-            folder-list(panelName = 'User Folders', folders = ${userFolders})"/>
+        <th:block th:replace="components/folders-nav :: folders-nav"/>
     </nav>
 
     <main>
