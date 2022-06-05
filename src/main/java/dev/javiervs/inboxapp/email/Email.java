@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.UUID;
@@ -38,8 +39,10 @@ public class Email {
     private String body;
 
     public static Email create(EmailDto emailDto) {
-        if (emailDto == null) {
-            throw new IllegalArgumentException("EmailDto cannot be null");
+        if (emailDto == null
+                || !StringUtils.hasText(emailDto.getFrom())
+                || !StringUtils.hasText(emailDto.getTo())) {
+            throw new IllegalArgumentException("EmailDto cannot be created");
         }
 
         return Email.builder()
@@ -53,5 +56,22 @@ public class Email {
 
     public String getVerboseTo() {
         return String.join(", ", to);
+    }
+
+    public String getReplySubject() {
+        return "Re: " + subject;
+    }
+
+    public String getReplyBody() {
+        return String.format(
+                "\n\n\n----------------------------------\n" +
+                        "From: %s\n" +
+                        "To: %s\n\n" +
+                        "%s",
+                from, getVerboseTo(), body);
+    }
+
+    public boolean hasUserAccess(String userId) {
+        return to.contains(userId) || from.equals(userId);
     }
 }

@@ -1,6 +1,6 @@
 .container {
     display: grid;
-    margin-top: 20px;
+    padding-top: 20px;
 
     grid-template-areas:
         "header header header"
@@ -37,4 +37,8 @@ footer {
 
 .heading-top {
     margin-top: 80px;
+}
+
+.body-text {
+    white-space: pre-wrap;
 }

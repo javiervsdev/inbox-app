@@ -30,11 +30,13 @@
                     <dt>Subject</dt>
                     <dd th:text="${email.subject}"/>
                     <dt>Body</dt>
-                    <dd th:text="${email.body}"/>
+                    <dd class="body-text" th:text="${email.body}"/>
                 </dl>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a class="btn btn-primary" type="button" th:href="@{/compose (to = ${email.getVerboseTo()})}">Reply</a>
-                    <a class="btn btn-primary" type="button" th:href="@{/compose (to = ${email.getVerboseTo() + ', ' + email.from})}">Reply All</a>
+                    <a class="btn btn-primary" type="button"
+                       th:href="@{/compose (to = ${email.getVerboseTo()}, id = ${email.id})}">Reply</a>
+                    <a class="btn btn-primary" type="button"
+                       th:href="@{/compose (to = ${email.getVerboseTo() + ', ' + email.from}, id = ${email.id})}">Reply All</a>
                 </div>
             </div>
         </div>
