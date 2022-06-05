@@ -30,3 +30,11 @@ main {
 footer {
     grid-area: footer;
 }
+
+.space-bottom {
+    margin-bottom: 30px;
+}
+
+.heading-top {
+    margin-top: 80px;
+}
